@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/glass_card_dashboard"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Card Icon -->
+    <ImageView
+        android:id="@+id/card_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:tint="@color/text_primary_glass"
+        tools:src="@drawable/ic_chat" />
+
+    <!-- Card Title -->
+    <TextView
+        android:id="@+id/card_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/text_primary_glass"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="AI Chat" />
+
+    <!-- Card Subtitle -->
+    <TextView
+        android:id="@+id/card_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.7"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:textColor="@color/text_secondary_glass"
+        android:textSize="12sp"
+        tools:text="Start conversation" />
+
+</LinearLayout>
