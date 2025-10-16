@@ -4,44 +4,143 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_ai_background"
+    android:background="@drawable/animated_gradient_background"
     tools:context=".ui.chat.ChatFragment">
 
-    <!-- Chat Header -->
+    <!-- AI Visualization Header -->
     <LinearLayout
-        android:id="@+id/chat_header"
+        android:id="@+id/ai_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/glass_background"
         android:gravity="center"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <!-- AI Avatar with Pulsing Effect -->
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:text="🤖 EmuBot AI Chat"
-            android:textColor="@color/text_primary_glass"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginEnd="12dp">
 
-        <TextView
+            <View
+                android:id="@+id/ai_pulse_background"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/glass_ripple_effect"
+                android:alpha="0.5" />
+
+            <TextView
+                android:id="@+id/ai_avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:background="@drawable/water_glass_button"
+                android:gravity="center"
+                android:text="🤖"
+                android:textSize="24sp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- AI Status -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="EmuBot AI"
+                    android:textColor="@color/text_primary_glass"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Online Status Indicator -->
+                <View
+                    android:id="@+id/status_indicator"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/glass_ripple_effect"
+                    android:backgroundTint="@color/online_status" />
+
+            </LinearLayout>
+
+            <!-- AI Activity Status -->
+            <TextView
+                android:id="@+id/ai_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:alpha="0.7"
+                android:text="🧠 Thinking intelligently..."
+                android:textColor="@color/text_secondary_glass"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- AI Visualization Bars -->
+        <LinearLayout
+            android:id="@+id/ai_visualization_bars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:alpha="0.7"
-            android:text="Your intelligent assistant"
-            android:textColor="@color/text_secondary_glass"
-            android:textSize="14sp" />
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/glass_background"
+                android:backgroundTint="@color/ai_primary" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="35dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/glass_background"
+                android:backgroundTint="@color/ai_secondary" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="15dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/glass_background"
+                android:backgroundTint="@color/ai_accent" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="25dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/glass_background"
+                android:backgroundTint="@color/ai_primary" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="40dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/glass_background"
+                android:backgroundTint="@color/ai_info" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <!-- Messages RecyclerView -->
+    <!-- Messages RecyclerView with Glass Background -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recycler_view"
         android:layout_width="0dp"
@@ -49,34 +148,79 @@
         android:layout_marginTop="8dp"
         android:clipToPadding="false"
         android:paddingBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/typing_indicator"
+        app:layout_constraintBottom_toTopOf="@id/typing_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_header"
+        app:layout_constraintTop_toBottomOf="@id/ai_header"
         tools:listitem="@layout/item_message_user" />
 
-    <!-- Typing Indicator -->
-    <TextView
-        android:id="@+id/typing_indicator"
-        android:layout_width="wrap_content"
+    <!-- Enhanced Typing Indicator Container -->
+    <LinearLayout
+        android:id="@+id/typing_container"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:alpha="0.7"
-        android:text="@string/typing_indicator"
-        android:textColor="@color/text_secondary_glass"
-        android:textSize="14sp"
+        android:background="@drawable/glass_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/input_container"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <!-- Input Container -->
+        <!-- Typing Animation Dots -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/typing_dot1"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/glass_ripple_effect"
+                android:backgroundTint="@color/ai_primary" />
+
+            <View
+                android:id="@+id/typing_dot2"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/glass_ripple_effect"
+                android:backgroundTint="@color/ai_secondary" />
+
+            <View
+                android:id="@+id/typing_dot3"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/glass_ripple_effect"
+                android:backgroundTint="@color/ai_accent" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:alpha="0.7"
+            android:text="AI is composing a response..."
+            android:textColor="@color/text_secondary_glass"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <!-- Enhanced Input Container -->
     <LinearLayout
         android:id="@+id/input_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/glass_background"
+        android:background="@drawable/water_glass_button"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="8dp"
@@ -84,39 +228,92 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Message Input -->
+        <!-- Voice Input Button -->
+        <LinearLayout
+            android:id="@+id/voice_button"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/glass_ripple_effect"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_voice"
+                app:tint="@color/text_primary_glass" />
+
+        </LinearLayout>
+
+        <!-- Message Input with Glass Effect -->
         <EditText
             android:id="@+id/message_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/hint_message"
+            android:background="@drawable/glass_input_background"
+            android:hint="💭 Ask me anything..."
             android:maxLines="4"
             android:padding="12dp"
             android:textColor="@color/text_primary_glass"
             android:textColorHint="@color/text_tertiary_glass"
             android:textSize="16sp" />
 
-        <!-- Send Button -->
+        <!-- Send Button with AI Effect -->
         <LinearLayout
             android:id="@+id/send_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:background="@drawable/glass_button_background"
+            android:background="@drawable/glass_ripple_effect"
+            android:backgroundTint="@color/ai_primary"
             android:gravity="center"
             android:orientation="vertical">
 
+            <!-- AI Spark Effect -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="➤"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:text="✨"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <!-- Floating Glass Particles -->
+    <View
+        android:id="@+id/floating_particle1"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="50dp"
+        android:background="@drawable/glass_ripple_effect"
+        android:alpha="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/floating_particle2"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/glass_ripple_effect"
+        android:alpha="0.2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/floating_particle3"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginBottom="150dp"
+        android:layout_marginStart="80dp"
+        android:background="@drawable/glass_ripple_effect"
+        android:alpha="0.4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

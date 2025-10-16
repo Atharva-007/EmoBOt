@@ -1,6 +1,7 @@
 package com.example.emubot.ui.chat
 
 import android.animation.ObjectAnimator
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emubot.databinding.FragmentChatBinding
 import com.example.emubot.ui.chat.adapter.ChatMessageAdapter
-import com.example.emubot.ui.chat.model.ChatMessage
+import com.example.emubot.utils.WaterGlassAnimations
 
 class ChatFragment : Fragment() {
 
@@ -31,12 +32,31 @@ class ChatFragment : Fragment() {
         _binding = FragmentChatBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        setupAnimatedBackground()
         setupRecyclerView()
         setupInputArea()
         observeViewModel()
         setupAnimations()
+        setupAIVisualization()
 
         return root
+    }
+
+    private fun setupAnimatedBackground() {
+        // Start animated gradient background
+        val animationDrawable = binding.root.background as? AnimationDrawable
+        animationDrawable?.start()
+        
+        WaterGlassAnimations.createLiquidWaveEffect(binding.root)
+        
+        // Animate floating particles
+        WaterGlassAnimations.createFloatingGlassEffect(binding.floatingParticle1)
+        binding.floatingParticle2.postDelayed({
+            WaterGlassAnimations.createFloatingGlassEffect(binding.floatingParticle2)
+        }, 500)
+        binding.floatingParticle3.postDelayed({
+            WaterGlassAnimations.createFloatingGlassEffect(binding.floatingParticle3)
+        }, 1000)
     }
 
     private fun setupRecyclerView() {
@@ -51,29 +71,27 @@ class ChatFragment : Fragment() {
     }
 
     private fun setupInputArea() {
+        // Enhanced send button with water ripple effect
         binding.sendButton.setOnClickListener {
             val message = binding.messageInput.text.toString().trim()
             if (message.isNotEmpty()) {
-                sendMessage(message)
-                binding.messageInput.setText("")
+                WaterGlassAnimations.createWaterRippleEffect(binding.sendButton) {
+                    sendMessage(message)
+                    binding.messageInput.setText("")
+                }
             }
         }
         
-        // Animate send button press
-        binding.sendButton.setOnClickListener { view ->
-            ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.9f, 1f).apply {
-                duration = 150
-                start()
-            }
-            ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.9f, 1f).apply {
-                duration = 150
-                start()
-            }
-            
-            val message = binding.messageInput.text.toString().trim()
-            if (message.isNotEmpty()) {
-                sendMessage(message)
-                binding.messageInput.setText("")
+        // Voice button with glass bounce effect
+        binding.voiceButton.setOnClickListener {
+            WaterGlassAnimations.createGlassBounceEffect(binding.voiceButton)
+            // TODO: Implement voice recognition
+        }
+        
+        // Input field focus effects
+        binding.messageInput.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                WaterGlassAnimations.createGlassShimmerEffect(binding.inputContainer)
             }
         }
     }
@@ -88,7 +106,11 @@ class ChatFragment : Fragment() {
         }
         
         chatViewModel.isTyping.observe(viewLifecycleOwner) { isTyping ->
-            binding.typingIndicator.visibility = if (isTyping) View.VISIBLE else View.GONE
+            if (isTyping) {
+                showTypingIndicator()
+            } else {
+                hideTypingIndicator()
+            }
         }
         
         // Load initial messages
@@ -96,57 +118,130 @@ class ChatFragment : Fragment() {
     }
 
     private fun setupAnimations() {
-        // Animate input area entrance
-        binding.inputContainer.alpha = 0f
-        binding.inputContainer.translationY = 100f
+        // Animate input area entrance with glass effect
+        WaterGlassAnimations.createGlassCardEntrance(binding.inputContainer, 300)
         
-        ObjectAnimator.ofFloat(binding.inputContainer, "alpha", 0f, 1f).apply {
-            duration = 600
-            startDelay = 300
-            start()
-        }
+        // Animate AI header with glass effect
+        WaterGlassAnimations.createGlassCardEntrance(binding.aiHeader, 0)
         
-        ObjectAnimator.ofFloat(binding.inputContainer, "translationY", 100f, 0f).apply {
-            duration = 600
-            startDelay = 300
-            interpolator = DecelerateInterpolator()
-            start()
-        }
+        // Chat area slide in
+        binding.chatRecyclerView.alpha = 0f
+        binding.chatRecyclerView.translationY = 100f
+        binding.chatRecyclerView.animate()
+            .alpha(1f)
+            .translationY(0f)
+            .setStartDelay(200)
+            .setDuration(600)
+            .setInterpolator(DecelerateInterpolator())
+            .start()
+    }
 
-        // Animate chat header
-        binding.chatHeader.alpha = 0f
-        binding.chatHeader.translationY = -50f
+    private fun setupAIVisualization() {
+        // AI avatar pulsing effect
+        WaterGlassAnimations.createAIVisualizationEffect(binding.aiAvatar)
+        WaterGlassAnimations.createAIVisualizationEffect(binding.aiPulseBackground)
         
-        ObjectAnimator.ofFloat(binding.chatHeader, "alpha", 0f, 1f).apply {
-            duration = 600
-            startDelay = 100
-            start()
+        // Status indicator pulsing
+        WaterGlassAnimations.createGlassShimmerEffect(binding.statusIndicator)
+        
+        // AI visualization bars animation
+        animateVisualizationBars()
+        
+        // AI status text updates
+        updateAIStatus()
+    }
+
+    private fun animateVisualizationBars() {
+        val bars = listOf(
+            binding.aiVisualizationBars.getChildAt(0),
+            binding.aiVisualizationBars.getChildAt(1),
+            binding.aiVisualizationBars.getChildAt(2),
+            binding.aiVisualizationBars.getChildAt(3),
+            binding.aiVisualizationBars.getChildAt(4)
+        )
+        
+        bars.forEachIndexed { index, bar ->
+            val animator = ObjectAnimator.ofFloat(bar, "scaleY", 0.3f, 1f, 0.5f, 1f, 0.3f).apply {
+                duration = (1500 + (index * 200)).toLong()
+                repeatCount = ObjectAnimator.INFINITE
+                startDelay = index * 100L
+            }
+            animator.start()
+        }
+    }
+
+    private fun updateAIStatus() {
+        val statusMessages = listOf(
+            "🧠 Processing your thoughts...",
+            "✨ Generating intelligent response...",
+            "🤖 AI neurons firing...",
+            "💭 Analyzing context...",
+            "🔮 Thinking creatively..."
+        )
+        
+        var currentIndex = 0
+        val handler = android.os.Handler(android.os.Looper.getMainLooper())
+        
+        val runnable = object : Runnable {
+            override fun run() {
+                WaterGlassAnimations.createTypewriterEffect(
+                    binding.aiStatus,
+                    statusMessages[currentIndex]
+                )
+                currentIndex = (currentIndex + 1) % statusMessages.size
+                handler.postDelayed(this, 4000)
+            }
         }
         
-        ObjectAnimator.ofFloat(binding.chatHeader, "translationY", -50f, 0f).apply {
-            duration = 600
-            startDelay = 100
-            interpolator = DecelerateInterpolator()
-            start()
+        handler.post(runnable)
+    }
+
+    private fun showTypingIndicator() {
+        binding.typingContainer.visibility = View.VISIBLE
+        WaterGlassAnimations.createGlassCardEntrance(binding.typingContainer)
+        
+        // Animate typing dots
+        animateTypingDots()
+    }
+
+    private fun hideTypingIndicator() {
+        binding.typingContainer.animate()
+            .alpha(0f)
+            .translationY(50f)
+            .setDuration(300)
+            .withEndAction {
+                binding.typingContainer.visibility = View.GONE
+                binding.typingContainer.alpha = 1f
+                binding.typingContainer.translationY = 0f
+            }
+            .start()
+    }
+
+    private fun animateTypingDots() {
+        val dots = listOf(binding.typingDot1, binding.typingDot2, binding.typingDot3)
+        
+        dots.forEachIndexed { index, dot ->
+            val animator = ObjectAnimator.ofFloat(dot, "alpha", 0.3f, 1f, 0.3f).apply {
+                duration = 600
+                repeatCount = ObjectAnimator.INFINITE
+                startDelay = index * 200L
+            }
+            animator.start()
         }
     }
 
     private fun sendMessage(text: String) {
         chatViewModel.sendMessage(text)
         
-        // Animate message sending
-        binding.messageInput.animate()
-            .scaleX(0.95f)
-            .scaleY(0.95f)
-            .setDuration(100)
-            .withEndAction {
-                binding.messageInput.animate()
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setDuration(100)
-                    .start()
-            }
-            .start()
+        // Enhanced message sending animation
+        WaterGlassAnimations.createGlassBounceEffect(binding.messageInput)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Restart background animation
+        val animationDrawable = binding.root.background as? AnimationDrawable
+        animationDrawable?.start()
     }
 
     override fun onDestroyView() {

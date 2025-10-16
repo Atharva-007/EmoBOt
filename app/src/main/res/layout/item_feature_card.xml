@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/water_glass_button"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Coming Soon Badge -->
+    <TextView
+        android:id="@+id/coming_soon_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@drawable/glass_ripple_effect"
+        android:padding="4dp"
+        android:text="SOON"
+        android:textColor="@color/ai_warning"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- Feature Icon with Glass Effect -->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <ImageView
+            android:id="@+id/feature_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            app:tint="@color/text_primary_glass"
+            tools:src="@drawable/ic_chat" />
+
+        <!-- Icon Glow Effect -->
+        <View
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/glass_ripple_effect"
+            android:alpha="0.3" />
+
+    </FrameLayout>
+
+    <!-- Feature Title -->
+    <TextView
+        android:id="@+id/feature_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textColor="@color/text_primary_glass"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="AI Chat Assistant" />
+
+    <!-- Feature Description -->
+    <TextView
+        android:id="@+id/feature_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/text_secondary_glass"
+        android:textSize="12sp"
+        tools:text="Intelligent conversations with context awareness and natural language processing" />
+
+    <!-- Feature Progress Indicator -->
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="12dp"
+        app:shimmer_auto_start="true"
+        app:shimmer_base_alpha="0.3"
+        app:shimmer_colored="true"
+        app:shimmer_duration="2000"
+        app:shimmer_highlight_alpha="0.8">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/glass_background" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</LinearLayout>

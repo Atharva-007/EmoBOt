@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Base gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#667eea"
+                android:endColor="#764ba2"
+                android:angle="45"
+                android:type="linear" />
+        </shape>
+    </item>
+    
+    <!-- Floating glass orbs -->
+    <item android:top="50dp" android:left="30dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#30FFFFFF"
+                android:endColor="#10FFFFFF"
+                android:type="radial"
+                android:gradientRadius="40dp" />
+            <size android:width="80dp" android:height="80dp" />
+        </shape>
+    </item>
+    
+    <item android:top="200dp" android:right="50dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#20FFFFFF"
+                android:endColor="#05FFFFFF"
+                android:type="radial"
+                android:gradientRadius="60dp" />
+            <size android:width="120dp" android:height="120dp" />
+        </shape>
+    </item>
+    
+    <item android:bottom="150dp" android:left="80dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#25FFFFFF"
+                android:endColor="#08FFFFFF"
+                android:type="radial"
+                android:gradientRadius="35dp" />
+            <size android:width="70dp" android:height="70dp" />
+        </shape>
+    </item>
+    
+    <item android:bottom="300dp" android:right="20dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#35FFFFFF"
+                android:endColor="#12FFFFFF"
+                android:type="radial"
+                android:gradientRadius="50dp" />
+            <size android:width="100dp" android:height="100dp" />
+        </shape>
+    </item>
+    
+    <!-- Glass overlay -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#10FFFFFF"
+                android:centerColor="#05FFFFFF"
+                android:endColor="#15FFFFFF"
+                android:angle="90"
+                android:type="linear" />
+        </shape>
+    </item>
+    
+</layer-list>
