@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "934177510759",
+    "project_id": "emuai-ee72a",
+    "storage_bucket": "emuai-ee72a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934177510759:android:30626d33be4d77a3b84bc2",
+        "android_client_info": {
+          "package_name": "com.example.emubot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD3xzR0kzx5opNLnyRJ4yBJt6KcXdjzJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934177510759:android:5634a02a78cda503b84bc2",
+        "android_client_info": {
+          "package_name": "com.example.emubot_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD3xzR0kzx5opNLnyRJ4yBJt6KcXdjzJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
